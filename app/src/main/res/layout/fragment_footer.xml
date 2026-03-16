@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#000000"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <!-- Top Section: 2 columns -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="24dp">
+
+        <!-- Left Column: PeerPrep + tagline -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingEnd="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Peer Prep"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Welcome to the place where curiosity becomes confidence."
+                android:textColor="#AAAAAA"
+                android:textSize="13sp"
+                android:lineSpacingMultiplier="1.5"/>
+
+        </LinearLayout>
+
+        <!-- Right Column: Quick Links -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quick Links"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:id="@+id/footer_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Home"
+                android:textColor="#AAAAAA"
+                android:textSize="14sp"
+                android:layout_marginBottom="6dp"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <TextView
+                android:id="@+id/footer_offers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Our Offers"
+                android:textColor="#AAAAAA"
+                android:textSize="14sp"
+                android:layout_marginBottom="6dp"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <TextView
+                android:id="@+id/footer_consultation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Consultation"
+                android:textColor="#AAAAAA"
+                android:textSize="14sp"
+                android:clickable="true"
+                android:focusable="true"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Bottom Section: 2 columns -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="24dp">
+
+        <!-- Left Column: Explore -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingEnd="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Explore"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:id="@+id/footer_instagram"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Instagram"
+                android:textColor="#AAAAAA"
+                android:textSize="14sp"
+                android:layout_marginBottom="6dp"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <TextView
+                android:id="@+id/footer_about"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="About us"
+                android:textColor="#AAAAAA"
+                android:textSize="14sp"
+                android:layout_marginBottom="6dp"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <TextView
+                android:id="@+id/footer_terms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Terms &amp; Privacy"
+                android:textColor="#AAAAAA"
+                android:textSize="14sp"
+                android:clickable="true"
+                android:focusable="true"/>
+
+        </LinearLayout>
+
+        <!-- Right Column: Contact -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contact"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"/>
+
+            <!-- Address -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/ic_location"
+                    app:tint="#2979FF"
+                    android:layout_marginEnd="8dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dehradun, 248001"
+                    android:textColor="#AAAAAA"
+                    android:textSize="13sp"/>
+
+            </LinearLayout>
+
+            <!-- Phone -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/ic_phone"
+                    app:tint="#2979FF"
+                    android:layout_marginEnd="8dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+91 6206359673"
+                    android:textColor="#AAAAAA"
+                    android:textSize="13sp"/>
+
+            </LinearLayout>
+
+            <!-- Email -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/ic_email"
+                    app:tint="#2979FF"
+                    android:layout_marginEnd="8dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="peerprepeducation@outlook.com"
+                    android:textColor="#AAAAAA"
+                    android:textSize="13sp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#333333"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Copyright + Privacy -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="© 2025 PeerPrep. All rights reserved."
+            android:textColor="#AAAAAA"
+            android:textSize="12sp"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/footer_privacy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Privacy Policy"
+            android:textColor="#2979FF"
+            android:textSize="12sp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+    </LinearLayout>
+
+</LinearLayout>

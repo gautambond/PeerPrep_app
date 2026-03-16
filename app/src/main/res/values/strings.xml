@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Peerprep</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="first_line">WELCOME TO THE PLACE WHERE CURIOSITY BECOMES CONFIDENCE</string>
+    <string name="second_line">Get ready for an unforgettable adventure where\nlearning meets fun! Where we turn textbooks\ninto treasure maps and every lesson into a\nthrilling experience.</string>
+    <string name="line3">What We Offer</string>
+    <string name="line4">Why choose Peer Prep Education?</string>
+    <string name="line5">Serving Students Across</string>
+</resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Dropdown Menu (3 dot or custom icon) -->
+    <item
+        android:id="@+id/nav_dropdown"
+        android:title="Menu"
+        android:icon="@drawable/menu_line"
+        app:showAsAction="always">
+        <menu>
+            <item android:id="@+id/menu_home"   android:title="Home"/>
+            <item android:id="@+id/menu_about"  android:title="About"/>
+            <item android:id="@+id/menu_contact" android:title="Contact"/>
+        </menu>
+    </item>
+
+    <!-- Login round icon (far right) -->
+    <item
+        android:id="@+id/menu_login"
+        android:title="Login"
+        android:icon="@drawable/login"
+        app:showAsAction="always"/>
+
+</menu>
