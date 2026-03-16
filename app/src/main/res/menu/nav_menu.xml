@@ -2,6 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
     <!-- Dropdown Menu (3 dot or custom icon) -->
     <item
         android:id="@+id/nav_dropdown"
@@ -10,6 +11,14 @@
         app:showAsAction="always">
         <menu>
             <item android:id="@+id/menu_home"   android:title="Home"/>
+            <item android:id="@+id/courses" android:title="Courses">
+                <menu>
+                    <item android:id="@+id/maths" android:title="Maths"/>
+                    <item android:id="@+id/science" android:title="Science"/>
+                    <item android:id="@+id/coding" android:title="Coding"/>
+
+                </menu>
+            </item>
             <item android:id="@+id/menu_about"  android:title="About"/>
             <item android:id="@+id/menu_contact" android:title="Contact"/>
         </menu>

@@ -29,4 +29,40 @@
         android:label="Login"
         tools:layout="@layout/fragment_login"/>
 
+    <fragment
+        android:id="@+id/mathsFragment"
+        android:name="com.bond.peerprep.courses.MathsFragment"
+        android:label="Maths"
+        tools:layout="@layout/fragment_maths"/>
+
+    <fragment
+        android:id="@+id/scienceFragment"
+        android:name="com.bond.peerprep.courses.ScienceFragment"
+        android:label="Science"
+        tools:layout="@layout/fragment_science"/>
+
+    <fragment
+        android:id="@+id/codingFragment"
+        android:name="com.bond.peerprep.courses.CodingFragment"
+        android:label="Coding"
+        tools:layout="@layout/fragment_coding"/>
+    <fragment
+        android:id="@+id/scienceFragment"
+        android:name="com.bond.peerprep.courses.ScienceFragment"
+        android:label="Science"
+        tools:layout="@layout/fragment_science"/>
+
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.bond.peerprep.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login"/>
+
+    <fragment
+        android:id="@+id/signupFragment"
+        android:name="com.bond.peerprep.SignupFragment"
+        android:label="Signup"
+        tools:layout="@layout/fragment_signup"/>
+
 </navigation>

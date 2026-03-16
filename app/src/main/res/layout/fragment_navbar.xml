@@ -10,7 +10,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#1a1f36"
+        android:background="@drawable/nav_background"
         android:elevation="8dp">
 
         <!-- Left side: Logo + App Name -->

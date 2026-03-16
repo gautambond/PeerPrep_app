@@ -51,6 +51,12 @@ class NavBarFragment : Fragment() {
                 R.id.menu_about -> navController.navigate(R.id.aboutFragment)
                 R.id.menu_contact -> navController.navigate(R.id.contactFragment)
                 R.id.menu_login -> navController.navigate(R.id.loginFragment)
+
+                //courses
+                R.id.maths -> navController.navigate(R.id.mathsFragment)
+                R.id.science -> navController.navigate(R.id.scienceFragment)
+                R.id.coding -> navController.navigate(R.id.codingFragment)
+
             }
         } catch (e: Exception) {
             e.printStackTrace()
