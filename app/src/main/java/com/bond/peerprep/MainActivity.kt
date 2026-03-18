@@ -12,9 +12,9 @@ class MainActivity : AppCompatActivity() {
 
         // ✅ Initialize Cloudinary
         val config = mapOf(
-            "cloud_name" to "dnek9zkxt",
-            "api_key"    to "137592247577564",
-            "api_secret" to "hZhWaEidw6MVpCJrR1zeuGOKM48"
+            "cloud_name" to "*******",
+            "api_key"    to "************",
+            "api_secret" to "********************"
         )
         MediaManager.init(this, config)
 
