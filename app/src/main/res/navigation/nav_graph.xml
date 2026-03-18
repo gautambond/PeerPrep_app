@@ -23,11 +23,7 @@
         android:label="Contact"
         tools:layout="@layout/fragment_contact"/>
 
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.bond.peerprep.LoginFragment"
-        android:label="Login"
-        tools:layout="@layout/fragment_login"/>
+
 
     <fragment
         android:id="@+id/mathsFragment"
@@ -46,11 +42,7 @@
         android:name="com.bond.peerprep.courses.CodingFragment"
         android:label="Coding"
         tools:layout="@layout/fragment_coding"/>
-    <fragment
-        android:id="@+id/scienceFragment"
-        android:name="com.bond.peerprep.courses.ScienceFragment"
-        android:label="Science"
-        tools:layout="@layout/fragment_science"/>
+
 
 
     <fragment
@@ -64,5 +56,35 @@
         android:name="com.bond.peerprep.SignupFragment"
         android:label="Signup"
         tools:layout="@layout/fragment_signup"/>
+
+
+    <fragment
+        android:id="@+id/studentDashboardFragment"
+        android:name="com.bond.peerprep.StudentDashboardFragment"
+        android:label="Student Dashboard"/>
+
+    <fragment
+        android:id="@+id/instructorDashboardFragment"
+        android:name="com.bond.peerprep.InstructorDashboardFragment"
+        android:label="Instructor Dashboard"/>
+
+    <fragment
+        android:id="@+id/adminDashboardFragment"
+        android:name="com.bond.peerprep.AdminDashboardFragment"
+        android:label="Admin Dashboard"/>
+
+
+    <fragment
+        android:id="@+id/exploreCoursesFragment"
+        android:name="com.bond.peerprep.ExploreCoursesFragment"
+        android:label="Explore Courses"
+        tools:layout="@layout/fragment_explore_courses"/>
+
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.bond.peerprep.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile"/>
 
 </navigation>

@@ -1,45 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.appcompat.widget.Toolbar
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="?attr/actionBarSize"
+    android:background="@drawable/nav_background"
+    android:elevation="8dp">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/nav_background"
-        android:elevation="8dp">
+    <!-- Left: Logo + App Name -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
-        <!-- Left side: Logo + App Name -->
-        <LinearLayout
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/nav_logo"
+            android:src="@drawable/logo2"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/CircleImageView"
+            android:layout_marginEnd="10dp"/>
+
+        <TextView
+            android:id="@+id/nav_app_name"
+            android:text="PeerPrep"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <!-- Right: User Section -->
+    <LinearLayout
+        android:id="@+id/nav_user_section"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/role_unselected"
+        android:padding="8dp"
+        android:layout_gravity="end"
+        android:clickable="true"
+        android:focusable="true">
+
+        <!-- Avatar Circle -->
+        <TextView
+            android:id="@+id/nav_user_avatar"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:background="@drawable/circle_icon_bg"
+            android:layout_marginEnd="6dp"
+            android:visibility="gone"/>
+
+        <!-- User Name / Login -->
+        <TextView
+            android:id="@+id/nav_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:text="Login"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:layout_marginEnd="4dp"/>
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/nav_logo"
-                android:src="@mipmap/logo"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:scaleType="centerCrop"
-                app:shapeAppearanceOverlay="@style/CircleImageView"
-                android:layout_marginEnd="10dp"/>
+        <!-- Dropdown Arrow -->
+        <ImageView
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:src="@drawable/ic_arrow_drop_down"
+            app:tint="#FFFFFF"/>
 
-            <TextView
-                android:id="@+id/nav_title"
-                android:text="@string/app_name"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"/>
+    </LinearLayout>
 
-        </LinearLayout>
-
-    </androidx.appcompat.widget.Toolbar>
-
-</LinearLayout>
+</androidx.appcompat.widget.Toolbar>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#1A1035"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/dialog_course_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- File Name Input -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxBackgroundColor="#2D2B6B"
+        app:boxStrokeColor="#2979FF"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dialog_file_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="File name"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#777777"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Pick File Button -->
+    <Button
+        android:id="@+id/dialog_pick_file"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="📁 Pick File or Image"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#2D2B6B"
+        android:layout_marginBottom="8dp"
+        app:cornerRadius="12dp"
+        app:strokeColor="#2979FF"
+        app:strokeWidth="1dp"/>
+
+    <TextView
+        android:id="@+id/dialog_selected_file"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No file selected"
+        android:textColor="#AAAAAA"
+        android:textSize="12sp"
+        android:layout_marginBottom="12dp"/>
+
+    <!-- Upload Button -->
+    <Button
+        android:id="@+id/dialog_upload_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Upload"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#2979FF"
+        android:layout_marginBottom="16dp"
+        app:cornerRadius="12dp"/>
+
+    <!-- Files List -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Uploaded Files"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"/>
+
+    <LinearLayout
+        android:id="@+id/dialog_files_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"/>
+
+</LinearLayout>

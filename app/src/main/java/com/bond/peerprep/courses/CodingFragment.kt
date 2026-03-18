@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.bond.peerprep.R
+import com.google.android.material.button.MaterialButton
 
 class CodingFragment : Fragment() {
 
@@ -90,5 +92,10 @@ class CodingFragment : Fragment() {
             .add(R.id.coding_curriculum, curriculum)
             .add(R.id.coding_why_us, whyUs)
             .commit()
+
+
+        view.findViewById<MaterialButton>(R.id.instructors_button).setOnClickListener {
+            findNavController().navigate(R.id.exploreCoursesFragment)
+        }
     }
 }
