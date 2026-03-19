@@ -102,6 +102,18 @@
                 android:backgroundTint="#2979FF"
                 app:cornerRadius="8dp"/>
 
+            <!-- Add this after Email button -->
+            <Button
+                android:id="@+id/btn_share_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="📤 Share Content"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:backgroundTint="#6C63FF"
+                android:layout_marginTop="8dp"
+                app:cornerRadius="8dp"/>
+
         </LinearLayout>
 
     </LinearLayout>

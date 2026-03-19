@@ -87,4 +87,10 @@
         android:label="Profile"
         tools:layout="@layout/fragment_profile"/>
 
+    <fragment
+        android:id="@+id/bookDemoFragment"
+        android:name="com.bond.peerprep.BookDemoFragment"
+        android:label="Book Demo"
+        tools:layout="@layout/fragment_book_demo"/>
+
 </navigation>

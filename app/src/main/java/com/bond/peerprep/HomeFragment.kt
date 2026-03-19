@@ -16,6 +16,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bond.peerprep.utils.Constants
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
 
 class HomeFragment : Fragment() {
@@ -24,7 +25,7 @@ class HomeFragment : Fragment() {
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var runnable: Runnable
 
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint("ClickableViewAccessibility", "MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -113,15 +114,24 @@ class HomeFragment : Fragment() {
             false
         }
 
-
-        // Floating button
-        view.findViewById<com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton>(R.id.fab_book).setOnClickListener {
-            // Navigate to contact or booking page
-            val navHostFragment = requireActivity()
-                .supportFragmentManager
-                .findFragmentById(R.id.nav_host_fragment)
-            navHostFragment?.findNavController()?.navigate(R.id.contactFragment)
+        view.findViewById<MaterialButton>(R.id.book_free_trial).setOnClickListener {
+            findNavController().navigate(R.id.bookDemoFragment)
         }
+
+
+
+        view.findViewById<MaterialButton>(R.id.fab_book).setOnClickListener {
+            findNavController().navigate(R.id.bookDemoFragment)
+        }
+
+//        // Floating button
+//        view.findViewById<com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton>(R.id.fab_book).setOnClickListener {
+//            // Navigate to contact or booking page
+//            val navHostFragment = requireActivity()
+//                .supportFragmentManager
+//                .findFragmentById(R.id.nav_host_fragment)
+//            navHostFragment?.findNavController()?.navigate(R.id.contactFragment)
+//        }
 
         return view
     }
@@ -139,6 +149,8 @@ class HomeFragment : Fragment() {
             handler.postDelayed(runnable, 5000)
         }
     }
+
+
 
 
 

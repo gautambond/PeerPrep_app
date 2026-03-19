@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/logo_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Peerprep">
+        android:theme="@style/Theme.PeerPrep">
         <activity
             android:name=".MainActivity"
             android:exported="true">

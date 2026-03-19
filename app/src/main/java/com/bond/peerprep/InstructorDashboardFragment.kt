@@ -1,5 +1,6 @@
 package com.bond.peerprep
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
@@ -31,8 +32,8 @@ class InstructorDashboardFragment : Fragment() {
     private val auth = FirebaseAuth.getInstance()
     private var selectedFileUri: Uri? = null
     private var dialogSelectedFileUri: Uri? = null
-    private val studentNames  = mutableListOf<String>()
-    private val studentIds    = mutableListOf<String>()
+    private val studentNames = mutableListOf<String>()
+    private val studentIds   = mutableListOf<String>()
 
     // Main file picker
     private val filePicker = registerForActivityResult(
@@ -54,7 +55,6 @@ class InstructorDashboardFragment : Fragment() {
         }
     }
 
-    // Reference to dialog views
     private var currentDialogFileNameView: TextView? = null
 
     override fun onCreateView(
@@ -194,11 +194,9 @@ class InstructorDashboardFragment : Fragment() {
             .addOnSuccessListener {
                 createBtn.isEnabled = true
                 createBtn.text = "Create Course"
-
-                // Clear fields
                 view.findViewById<TextInputEditText>(R.id.course_name).text?.clear()
-                view.findViewById<TextInputEditText>(R.id.course_description).text?.clear()
-
+                view.findViewById<TextInputEditText>(
+                    R.id.course_description).text?.clear()
                 Toast.makeText(requireContext(),
                     "✅ Course created!", Toast.LENGTH_SHORT).show()
                 loadCourses(view, instructorId)
@@ -222,11 +220,7 @@ class InstructorDashboardFragment : Fragment() {
                 container.removeAllViews()
 
                 if (docs.isEmpty) {
-                    val empty = TextView(requireContext())
-                    empty.text = "No courses created yet"
-                    empty.setTextColor(android.graphics.Color.parseColor("#AAAAAA"))
-                    empty.setPadding(0, 16, 0, 16)
-                    container.addView(empty)
+                    showEmpty(container, "No courses created yet")
                     return@addOnSuccessListener
                 }
 
@@ -243,7 +237,6 @@ class InstructorDashboardFragment : Fragment() {
                     cardView.findViewById<TextView>(R.id.course_item_desc).text =
                         courseDesc
 
-                    // Get enrolled students count
                     db.collection("courses").document(courseId)
                         .collection("students")
                         .get()
@@ -253,19 +246,16 @@ class InstructorDashboardFragment : Fragment() {
                                 "👥 ${students.size()} students enrolled"
                         }
 
-                    // Files button
                     cardView.findViewById<MaterialButton>(
                         R.id.btn_course_upload).setOnClickListener {
                         showFilesDialog(courseId, courseName, instructorId)
                     }
 
-                    // Students button
                     cardView.findViewById<MaterialButton>(
                         R.id.btn_course_students).setOnClickListener {
                         showCourseStudents(courseId, courseName)
                     }
 
-                    // Delete button
                     cardView.findViewById<MaterialButton>(
                         R.id.btn_course_delete).setOnClickListener {
                         deleteCourse(view, courseId, instructorId)
@@ -301,7 +291,6 @@ class InstructorDashboardFragment : Fragment() {
 
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-        // Pick file
         dialogView.findViewById<MaterialButton>(R.id.dialog_pick_file)
             .setOnClickListener {
                 val intent = Intent(Intent.ACTION_GET_CONTENT)
@@ -309,7 +298,6 @@ class InstructorDashboardFragment : Fragment() {
                 dialogFilePicker.launch(intent)
             }
 
-        // Upload file
         dialogView.findViewById<MaterialButton>(R.id.dialog_upload_btn)
             .setOnClickListener {
                 val fileName = dialogView
@@ -328,17 +316,12 @@ class InstructorDashboardFragment : Fragment() {
                 }
 
                 uploadFileToCourse(
-                    dialogView,
-                    dialogSelectedFileUri!!,
-                    fileName,
-                    courseId,
-                    instructorId
+                    dialogView, dialogSelectedFileUri!!,
+                    fileName, courseId, instructorId
                 )
             }
 
-        // Load existing files
         loadCourseFiles(dialogView, courseId)
-
         dialog.show()
     }
 
@@ -360,10 +343,7 @@ class InstructorDashboardFragment : Fragment() {
                 override fun onStart(requestId: String) {}
 
                 override fun onProgress(
-                    requestId: String,
-                    bytes: Long,
-                    totalBytes: Long
-                ) {
+                    requestId: String, bytes: Long, totalBytes: Long) {
                     val progress = (bytes * 100 / totalBytes).toInt()
                     activity?.runOnUiThread {
                         uploadBtn.text = "Uploading $progress%..."
@@ -371,10 +351,8 @@ class InstructorDashboardFragment : Fragment() {
                 }
 
                 override fun onSuccess(
-                    requestId: String,
-                    resultData: Map<*, *>
-                ) {
-                    val url = resultData["secure_url"].toString()
+                    requestId: String, resultData: Map<*, *>) {
+                    val url  = resultData["secure_url"].toString()
                     val type = if (url.contains("image")) "image" else "file"
 
                     val fileData = hashMapOf(
@@ -386,14 +364,11 @@ class InstructorDashboardFragment : Fragment() {
                         "uploadedAt"   to System.currentTimeMillis()
                     )
 
-                    // Save to course files subcollection
                     db.collection("courses").document(courseId)
                         .collection("files")
                         .add(fileData)
                         .addOnSuccessListener {
-                            // Also save to main files collection
                             db.collection("files").add(fileData)
-
                             activity?.runOnUiThread {
                                 uploadBtn.isEnabled = true
                                 uploadBtn.text = "Upload"
@@ -401,7 +376,6 @@ class InstructorDashboardFragment : Fragment() {
                                 currentDialogFileNameView?.text = "No file selected"
                                 dialogView.findViewById<TextInputEditText>(
                                     R.id.dialog_file_name).text?.clear()
-
                                 Toast.makeText(requireContext(),
                                     "✅ File uploaded!", Toast.LENGTH_SHORT).show()
                                 loadCourseFiles(dialogView, courseId)
@@ -419,10 +393,7 @@ class InstructorDashboardFragment : Fragment() {
                     }
                 }
 
-                override fun onReschedule(
-                    requestId: String,
-                    error: ErrorInfo
-                ) {}
+                override fun onReschedule(requestId: String, error: ErrorInfo) {}
             })
             .dispatch()
     }
@@ -450,7 +421,6 @@ class InstructorDashboardFragment : Fragment() {
                     val name = doc.getString("name") ?: ""
                     val url  = doc.getString("url") ?: ""
                     val type = doc.getString("type") ?: "file"
-
                     val icon = if (type == "image") "🖼️" else "📁"
 
                     val fileView = TextView(requireContext())
@@ -463,13 +433,12 @@ class InstructorDashboardFragment : Fragment() {
                         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                         startActivity(intent)
                     }
-
                     container.addView(fileView)
                 }
             }
     }
 
-    // ✅ Show course students with details
+    // ✅ Show course students
     private fun showCourseStudents(courseId: String, courseName: String) {
         val dialogView = LayoutInflater.from(requireContext())
             .inflate(R.layout.dialog_students_list, null)
@@ -497,7 +466,6 @@ class InstructorDashboardFragment : Fragment() {
                     for (studentDoc in studentDocs) {
                         val studentId = studentDoc.getString("studentId") ?: ""
 
-                        // Get full student details
                         db.collection("users").document(studentId)
                             .get()
                             .addOnSuccessListener { userDoc ->
@@ -516,7 +484,6 @@ class InstructorDashboardFragment : Fragment() {
                                 cardView.findViewById<TextView>(
                                     R.id.student_detail_phone).text = phone
 
-                                // Call button
                                 cardView.findViewById<MaterialButton>(
                                     R.id.btn_call_student).setOnClickListener {
                                     val intent = Intent(Intent.ACTION_DIAL,
@@ -524,13 +491,22 @@ class InstructorDashboardFragment : Fragment() {
                                     startActivity(intent)
                                 }
 
-                                // Email button
                                 cardView.findViewById<MaterialButton>(
                                     R.id.btn_email_student).setOnClickListener {
                                     val intent = Intent(Intent.ACTION_SENDTO).apply {
                                         data = Uri.parse("mailto:$email")
                                     }
                                     startActivity(intent)
+                                }
+
+                                // ✅ Share content button
+                                cardView.findViewById<MaterialButton>(
+                                    R.id.btn_share_content).setOnClickListener {
+                                    showShareContentDialog(
+                                        studentId, name,
+                                        courseId, courseName,
+                                        courseId
+                                    )
                                 }
 
                                 container.addView(cardView)
@@ -546,95 +522,429 @@ class InstructorDashboardFragment : Fragment() {
             .show()
     }
 
-    // ✅ Load my students (all students under this instructor)
+    // ✅ Load my students from enrollments
+    @SuppressLint("MissingInflatedId")
     private fun loadMyStudents(view: View, instructorId: String) {
         val container = view.findViewById<LinearLayout>(R.id.my_students_container)
+        container.removeAllViews()
 
-        db.collection("users")
-            .whereEqualTo("role", "student")
+        db.collection("courses")
             .whereEqualTo("instructorId", instructorId)
+            .get()
+            .addOnSuccessListener { courseDocs ->
+                if (courseDocs.isEmpty) {
+                    showEmpty(container, "No courses created yet")
+                    return@addOnSuccessListener
+                }
+
+                val addedStudentIds = mutableSetOf<String>()
+
+                for (courseDoc in courseDocs) {
+                    val courseId   = courseDoc.id
+                    val courseName = courseDoc.getString("name") ?: ""
+
+                    db.collection("courses").document(courseId)
+                        .collection("students")
+                        .get()
+                        .addOnSuccessListener { studentDocs ->
+                            if (studentDocs.isEmpty) return@addOnSuccessListener
+
+                            for (studentDoc in studentDocs) {
+                                val studentId =
+                                    studentDoc.getString("studentId") ?: ""
+
+                                if (studentId.isEmpty() ||
+                                    addedStudentIds.contains(studentId)) continue
+                                addedStudentIds.add(studentId)
+
+                                db.collection("users").document(studentId)
+                                    .get()
+                                    .addOnSuccessListener { userDoc ->
+                                        if (!userDoc.exists()) return@addOnSuccessListener
+
+                                        val name  = userDoc.getString("name") ?: ""
+                                        val email = userDoc.getString("email") ?: ""
+                                        val phone = userDoc.getString("phone") ?: ""
+
+                                        val cardView = LayoutInflater.from(
+                                            requireContext())
+                                            .inflate(
+                                                R.layout.item_student_detail_card,
+                                                container, false)
+
+                                        cardView.findViewById<TextView>(
+                                            R.id.student_detail_name).text = name
+                                        cardView.findViewById<TextView>(
+                                            R.id.student_detail_email).text = email
+                                        cardView.findViewById<TextView>(
+                                            R.id.student_detail_phone).text =
+                                            phone.ifEmpty { "No phone" }
+
+                                        // ✅ Call button
+                                        cardView.findViewById<MaterialButton>(
+                                            R.id.btn_call_student).setOnClickListener {
+                                            if (phone.isEmpty()) {
+                                                Toast.makeText(requireContext(),
+                                                    "No phone number available",
+                                                    Toast.LENGTH_SHORT).show()
+                                                return@setOnClickListener
+                                            }
+                                            val intent = Intent(Intent.ACTION_DIAL,
+                                                Uri.parse("tel:$phone"))
+                                            startActivity(intent)
+                                        }
+
+                                        // ✅ Email button
+                                        cardView.findViewById<MaterialButton>(
+                                            R.id.btn_email_student).setOnClickListener {
+                                            val intent = Intent(
+                                                Intent.ACTION_SENDTO).apply {
+                                                data = Uri.parse("mailto:$email")
+                                            }
+                                            startActivity(intent)
+                                        }
+
+                                        // ✅ Share content button
+                                        cardView.findViewById<MaterialButton>(
+                                            R.id.btn_share_content).setOnClickListener {
+                                            showShareContentDialog(
+                                                studentId, name,
+                                                courseId, courseName,
+                                                instructorId
+                                            )
+                                        }
+
+                                        container.addView(cardView)
+                                    }
+                            }
+                        }
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(requireContext(),
+                    "Error: ${it.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    // ✅ Load students for spinner
+    private fun loadStudentsForSpinner(instructorId: String) {
+        studentNames.clear()
+        studentIds.clear()
+
+        db.collection("courses")
+            .whereEqualTo("instructorId", instructorId)
+            .get()
+            .addOnSuccessListener { courseDocs ->
+                val addedIds = mutableSetOf<String>()
+
+                for (courseDoc in courseDocs) {
+                    val courseId = courseDoc.id
+
+                    db.collection("courses").document(courseId)
+                        .collection("students")
+                        .get()
+                        .addOnSuccessListener { studentDocs ->
+                            for (studentDoc in studentDocs) {
+                                val studentId =
+                                    studentDoc.getString("studentId") ?: ""
+                                if (studentId.isEmpty() ||
+                                    addedIds.contains(studentId)) continue
+                                addedIds.add(studentId)
+
+                                db.collection("users").document(studentId)
+                                    .get()
+                                    .addOnSuccessListener { userDoc ->
+                                        val name = userDoc.getString("name") ?: ""
+                                        studentNames.add(name)
+                                        studentIds.add(studentId)
+
+                                        view?.let { v ->
+                                            val spinner = v.findViewById<Spinner>(
+                                                R.id.student_spinner)
+                                            val adapter = ArrayAdapter(
+                                                requireContext(),
+                                                android.R.layout.simple_spinner_item,
+                                                studentNames
+                                            )
+                                            adapter.setDropDownViewResource(
+                                                android.R.layout
+                                                    .simple_spinner_dropdown_item)
+                                            spinner.adapter = adapter
+                                        }
+                                    }
+                            }
+                        }
+                }
+            }
+    }
+
+    // ✅ Show share content options dialog
+    private fun showShareContentDialog(
+        studentId: String,
+        studentName: String,
+        courseId: String,
+        courseName: String,
+        instructorId: String
+    ) {
+        val options = arrayOf(
+            "📁 Share File/Image",
+            "📅 Share Weekly Schedule"
+        )
+
+        AlertDialog.Builder(requireContext())
+            .setTitle("Share with $studentName")
+            .setItems(options) { _, which ->
+                when (which) {
+                    0 -> showFileShareDialog(
+                        studentId, studentName,
+                        courseId, courseName, instructorId)
+                    1 -> showScheduleDialog(
+                        studentId, studentName, instructorId)
+                }
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    // ✅ Share file dialog
+    private fun showFileShareDialog(
+        studentId: String,
+        studentName: String,
+        courseId: String,
+        courseName: String,
+        instructorId: String
+    ) {
+        val dialogView = LayoutInflater.from(requireContext())
+            .inflate(R.layout.dialog_course_files, null)
+
+        dialogView.findViewById<TextView>(R.id.dialog_course_name).text =
+            "Share file with $studentName"
+
+        currentDialogFileNameView =
+            dialogView.findViewById(R.id.dialog_selected_file)
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .setNegativeButton("Close", null)
+            .create()
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        dialogView.findViewById<MaterialButton>(R.id.dialog_pick_file)
+            .setOnClickListener {
+                val intent = Intent(Intent.ACTION_GET_CONTENT)
+                intent.type = "*/*"
+                dialogFilePicker.launch(intent)
+            }
+
+        dialogView.findViewById<MaterialButton>(R.id.dialog_upload_btn)
+            .setOnClickListener {
+                val fileName = dialogView
+                    .findViewById<TextInputEditText>(R.id.dialog_file_name)
+                    .text.toString().trim()
+
+                if (fileName.isEmpty()) {
+                    Toast.makeText(requireContext(),
+                        "Enter file name!", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                if (dialogSelectedFileUri == null) {
+                    Toast.makeText(requireContext(),
+                        "Please select a file!", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+                uploadFileToStudent(
+                    dialogView, dialogSelectedFileUri!!,
+                    fileName, studentId, courseId, instructorId
+                )
+            }
+
+        loadStudentFiles(dialogView, studentId, courseId)
+        dialog.show()
+    }
+
+    // ✅ Upload file specifically for a student
+    private fun uploadFileToStudent(
+        dialogView: View,
+        uri: Uri,
+        fileName: String,
+        studentId: String,
+        courseId: String,
+        instructorId: String
+    ) {
+        val uploadBtn = dialogView.findViewById<MaterialButton>(R.id.dialog_upload_btn)
+        uploadBtn.isEnabled = false
+        uploadBtn.text = "Uploading..."
+
+        MediaManager.get().upload(uri)
+            .option("public_id", "students/$studentId/$fileName")
+            .callback(object : UploadCallback {
+                override fun onStart(requestId: String) {}
+
+                override fun onProgress(
+                    requestId: String, bytes: Long, totalBytes: Long) {
+                    val progress = (bytes * 100 / totalBytes).toInt()
+                    activity?.runOnUiThread {
+                        uploadBtn.text = "Uploading $progress%..."
+                    }
+                }
+
+                override fun onSuccess(
+                    requestId: String, resultData: Map<*, *>) {
+                    val url  = resultData["secure_url"].toString()
+                    val type = if (url.contains("image")) "image" else "file"
+
+                    val fileData = hashMapOf(
+                        "name"         to fileName,
+                        "url"          to url,
+                        "type"         to type,
+                        "studentId"    to studentId,
+                        "courseId"     to courseId,
+                        "instructorId" to instructorId,
+                        "uploadedAt"   to System.currentTimeMillis()
+                    )
+
+                    db.collection("studentFiles")
+                        .add(fileData)
+                        .addOnSuccessListener {
+                            activity?.runOnUiThread {
+                                uploadBtn.isEnabled = true
+                                uploadBtn.text = "Upload"
+                                dialogSelectedFileUri = null
+                                currentDialogFileNameView?.text = "No file selected"
+                                dialogView.findViewById<TextInputEditText>(
+                                    R.id.dialog_file_name).text?.clear()
+                                Toast.makeText(requireContext(),
+                                    "✅ File shared with student!",
+                                    Toast.LENGTH_SHORT).show()
+                                loadStudentFiles(dialogView, studentId, courseId)
+                            }
+                        }
+                }
+
+                override fun onError(requestId: String, error: ErrorInfo) {
+                    activity?.runOnUiThread {
+                        uploadBtn.isEnabled = true
+                        uploadBtn.text = "Upload"
+                        Toast.makeText(requireContext(),
+                            "Upload failed: ${error.description}",
+                            Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onReschedule(requestId: String, error: ErrorInfo) {}
+            })
+            .dispatch()
+    }
+
+    // ✅ Load files shared with a specific student
+    private fun loadStudentFiles(
+        dialogView: View,
+        studentId: String,
+        courseId: String
+    ) {
+        val container = dialogView.findViewById<LinearLayout>(
+            R.id.dialog_files_container)
+
+        db.collection("studentFiles")
+            .whereEqualTo("studentId", studentId)
+            .whereEqualTo("courseId", courseId)
             .get()
             .addOnSuccessListener { docs ->
                 container.removeAllViews()
 
                 if (docs.isEmpty) {
                     val empty = TextView(requireContext())
-                    empty.text = "No students assigned yet"
-                    empty.setTextColor(
-                        android.graphics.Color.parseColor("#AAAAAA"))
-                    empty.setPadding(0, 16, 0, 16)
+                    empty.text = "No files shared yet"
+                    empty.setTextColor(android.graphics.Color.parseColor("#AAAAAA"))
                     container.addView(empty)
                     return@addOnSuccessListener
                 }
 
                 for (doc in docs) {
-                    val name  = doc.getString("name") ?: ""
-                    val email = doc.getString("email") ?: ""
-                    val phone = doc.getString("phone") ?: ""
+                    val name = doc.getString("name") ?: ""
+                    val url  = doc.getString("url") ?: ""
+                    val type = doc.getString("type") ?: "file"
+                    val icon = if (type == "image") "🖼️" else "📁"
 
-                    val cardView = LayoutInflater.from(requireContext())
-                        .inflate(R.layout.item_student_detail_card,
-                            container, false)
-
-                    cardView.findViewById<TextView>(
-                        R.id.student_detail_name).text = name
-                    cardView.findViewById<TextView>(
-                        R.id.student_detail_email).text = email
-                    cardView.findViewById<TextView>(
-                        R.id.student_detail_phone).text = phone
-
-                    // Call button
-                    cardView.findViewById<MaterialButton>(
-                        R.id.btn_call_student).setOnClickListener {
-                        val intent = Intent(Intent.ACTION_DIAL,
-                            Uri.parse("tel:$phone"))
+                    val fileView = TextView(requireContext())
+                    fileView.text = "$icon $name"
+                    fileView.setTextColor(
+                        android.graphics.Color.parseColor("#2979FF"))
+                    fileView.textSize = 14f
+                    fileView.setPadding(0, 8, 0, 8)
+                    fileView.setOnClickListener {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                         startActivity(intent)
                     }
-
-                    // Email button
-                    cardView.findViewById<MaterialButton>(
-                        R.id.btn_email_student).setOnClickListener {
-                        val intent = Intent(Intent.ACTION_SENDTO).apply {
-                            data = Uri.parse("mailto:$email")
-                        }
-                        startActivity(intent)
-                    }
-
-                    container.addView(cardView)
+                    container.addView(fileView)
                 }
             }
     }
 
-    // ✅ Load students for spinner in schedule tab
-    private fun loadStudentsForSpinner(instructorId: String) {
-        studentNames.clear()
-        studentIds.clear()
+    // ✅ Show schedule dialog for specific student
+    private fun showScheduleDialog(
+        studentId: String,
+        studentName: String,
+        instructorId: String
+    ) {
+        val dialogView = LayoutInflater.from(requireContext())
+            .inflate(R.layout.dialog_post_schedule, null)
 
-        db.collection("users")
-            .whereEqualTo("role", "student")
-            .whereEqualTo("instructorId", instructorId)
-            .get()
-            .addOnSuccessListener { docs ->
-                for (doc in docs) {
-                    studentNames.add(doc.getString("name") ?: "")
-                    studentIds.add(doc.id)
+        dialogView.findViewById<TextView>(R.id.dialog_schedule_title).text =
+            "Post Schedule to $studentName"
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .setNegativeButton("Close", null)
+            .create()
+
+        dialogView.findViewById<MaterialButton>(R.id.dialog_post_btn)
+            .setOnClickListener {
+                val subject  = dialogView
+                    .findViewById<TextInputEditText>(R.id.dialog_subject)
+                    .text.toString().trim()
+                val time     = dialogView
+                    .findViewById<TextInputEditText>(R.id.dialog_time)
+                    .text.toString().trim()
+                val zoomLink = dialogView
+                    .findViewById<TextInputEditText>(R.id.dialog_zoom)
+                    .text.toString().trim()
+
+                if (subject.isEmpty() || time.isEmpty() || zoomLink.isEmpty()) {
+                    Toast.makeText(requireContext(),
+                        "Fill all fields!", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
                 }
 
-                view?.let { v ->
-                    val spinner = v.findViewById<Spinner>(R.id.student_spinner)
-                    val adapter = ArrayAdapter(
-                        requireContext(),
-                        android.R.layout.simple_spinner_item,
-                        studentNames
-                    )
-                    adapter.setDropDownViewResource(
-                        android.R.layout.simple_spinner_dropdown_item)
-                    spinner.adapter = adapter
-                }
+                val scheduleData = hashMapOf(
+                    "subject"      to subject,
+                    "time"         to time,
+                    "zoomLink"     to zoomLink,
+                    "instructorId" to instructorId,
+                    "studentId"    to studentId,
+                    "createdAt"    to System.currentTimeMillis()
+                )
+
+                db.collection("schedules")
+                    .add(scheduleData)
+                    .addOnSuccessListener {
+                        Toast.makeText(requireContext(),
+                            "✅ Schedule posted to $studentName!",
+                            Toast.LENGTH_SHORT).show()
+                        dialog.dismiss()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(requireContext(),
+                            "Error: ${it.message}", Toast.LENGTH_SHORT).show()
+                    }
             }
+
+        dialog.show()
     }
 
-    // ✅ Post schedule to specific student
+    // ✅ Post schedule from Schedule tab
     private fun postScheduleToStudent(
         instructorId: String,
         studentId: String,
@@ -658,7 +968,6 @@ class InstructorDashboardFragment : Fragment() {
                     "✅ Schedule posted to student!",
                     Toast.LENGTH_SHORT).show()
 
-                // Clear fields
                 view?.let { v ->
                     v.findViewById<TextInputEditText>(
                         R.id.schedule_subject).text?.clear()
@@ -690,5 +999,14 @@ class InstructorDashboardFragment : Fragment() {
             }
             .setNegativeButton("Cancel", null)
             .show()
+    }
+
+    // ✅ Helper empty message
+    private fun showEmpty(container: LinearLayout, message: String) {
+        val empty = TextView(requireContext())
+        empty.text = message
+        empty.setTextColor(android.graphics.Color.parseColor("#AAAAAA"))
+        empty.setPadding(0, 16, 0, 16)
+        container.addView(empty)
     }
 }

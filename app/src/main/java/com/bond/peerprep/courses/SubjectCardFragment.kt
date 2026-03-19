@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bond.peerprep.R
+import com.google.android.material.button.MaterialButton
 
 class SubjectCardFragment : Fragment() {
 
@@ -73,11 +74,8 @@ class SubjectCardFragment : Fragment() {
         view.findViewById<Button>(R.id.card_button).text = button
 
         // Button click
-        view.findViewById<Button>(R.id.card_button).setOnClickListener {
-            val navHostFragment = requireActivity()
-                .supportFragmentManager
-                .findFragmentById(R.id.nav_host_fragment)
-            navHostFragment?.findNavController()?.navigate(R.id.contactFragment)
+        view.findViewById<MaterialButton>(R.id.card_button).setOnClickListener {
+            findNavController().navigate(R.id.bookDemoFragment)
         }
 
         return view

@@ -1,11 +1,15 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.Peerprep" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-        <item name="colorPrimary">@color/cardview_dark_background</item>
+<resources>
+    <style name="Theme.PeerPrep" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+        <!-- Status bar color -->
+        <item name="android:statusBarColor">#1a1f36</item>
+
+        <!-- Status bar icons dark/light -->
+        <item name="android:windowLightStatusBar">false</item>
+
+        <!-- ✅ This prevents content going under status bar -->
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:fitsSystemWindows">true</item>
 
     </style>
-
-    <style name="Theme.Peerprep" parent="Base.Theme.Peerprep" />
 </resources>

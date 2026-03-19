@@ -94,5 +94,8 @@ class MathsFragment : Fragment() {
         view.findViewById<MaterialButton>(R.id.instructors_button).setOnClickListener {
             findNavController().navigate(R.id.exploreCoursesFragment)
         }
+        view.findViewById<MaterialButton>(R.id.card_button).setOnClickListener {
+            findNavController().navigate(R.id.bookDemoFragment)
+        }
     }
 }
